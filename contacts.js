@@ -23,7 +23,7 @@ function getContactById(contactId) {
         const contacts = JSON.parse(data);
 
         const contact = contacts.find(contact => {
-            if (contactId === contact.id) {
+            if (String(contactId) === contact.id) {
                 console.table(contact);
                 return contact;
             }
@@ -39,7 +39,7 @@ function removeContact(contactId) {
 
         const contacts = JSON.parse(data);
         const newContacts = contacts.filter(
-            contact => contact.id !== contactId
+            contact => contact.id !== String(contactId)
         );
         console.table(newContacts);
 
