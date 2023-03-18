@@ -10,6 +10,7 @@ function listContacts() {
         }
 
         const contacts = JSON.parse(data);
+
         console.table(contacts);
     });
 }
@@ -21,6 +22,11 @@ function getContactById(contactId) {
         }
 
         const contacts = JSON.parse(data);
+
+        const allId = contacts.map(contact => contact.id);
+        if (!allId.includes(String(contactId))) {
+            return console.log(`Contact with ID-${contactId} not found!`);
+        }
 
         const contact = contacts.find(contact => {
             if (String(contactId) === contact.id) {
@@ -41,6 +47,10 @@ function removeContact(contactId) {
         const newContacts = contacts.filter(
             contact => contact.id !== String(contactId)
         );
+
+        if (contacts.length === newContacts.length) {
+            return console.log(`Contact with ID-${contactId} not found!`);
+        }
         console.table(newContacts);
 
         fs.writeFile(contactsPath, JSON.stringify(newContacts), err => {
